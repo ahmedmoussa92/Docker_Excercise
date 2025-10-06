@@ -1,0 +1,46 @@
+version: '3.9'
+services:
+  api:
+    image: datascientest/fastapi:1.0.0
+    container_name: api
+    ports:
+      - "8000:8000"
+
+  test_auth:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        TEST_FILE: test_auth.py
+    depends_on:
+      - api
+    environment:
+      - LOG=1
+    volumes:
+      - ./logs:/logs
+
+  test_authorization:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        TEST_FILE: test_authorization.py
+    depends_on:
+      - api
+    environment:
+      - LOG=1
+    volumes:
+      - ./logs:/logs
+
+  test_content:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        TEST_FILE: test_content.py
+    depends_on:
+      - api
+    environment:
+      - LOG=1
+    volumes:
+      - ./logs:/logs

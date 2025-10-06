@@ -1,0 +1,153 @@
+Building with native build. Learn about native build in Compose here: https://docs.docker.com/go/compose-native-build/
+Building test_auth
+Sending build context to Docker daemon  78.85kB
+
+Step 1/8 : FROM python:3.9-slim
+ ---> abf3b76f84b9
+Step 2/8 : WORKDIR /app
+ ---> Using cache
+ ---> e08be3d5d6d5
+Step 3/8 : ARG TEST_FILE
+ ---> Using cache
+ ---> 6135ecb87eff
+Step 4/8 : COPY ${TEST_FILE} /app/test.py
+ ---> Using cache
+ ---> 03dd14d28cba
+Step 5/8 : ENV PIP_NO_PROGRESS_BAR=off
+ ---> Using cache
+ ---> d9467da17460
+Step 6/8 : ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+ ---> Using cache
+ ---> 0d5b3c550dee
+Step 7/8 : RUN pip install --no-cache-dir --progress-bar off requests
+ ---> Using cache
+ ---> 305d58f647c0
+Step 8/8 : CMD ["python", "test.py"]
+ ---> Using cache
+ ---> dbfd9a3f82df
+Successfully built dbfd9a3f82df
+Successfully tagged api_tests_exercise_test_auth:latest
+Building test_authorization
+Sending build context to Docker daemon  79.36kB
+
+Step 1/8 : FROM python:3.9-slim
+ ---> abf3b76f84b9
+Step 2/8 : WORKDIR /app
+ ---> Using cache
+ ---> e08be3d5d6d5
+Step 3/8 : ARG TEST_FILE
+ ---> Using cache
+ ---> 6135ecb87eff
+Step 4/8 : COPY ${TEST_FILE} /app/test.py
+ ---> Using cache
+ ---> 7e955070d238
+Step 5/8 : ENV PIP_NO_PROGRESS_BAR=off
+ ---> Using cache
+ ---> 93797a4cc20d
+Step 6/8 : ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+ ---> Using cache
+ ---> 5cb5d57be490
+Step 7/8 : RUN pip install --no-cache-dir --progress-bar off requests
+ ---> Using cache
+ ---> 84c45fab4445
+Step 8/8 : CMD ["python", "test.py"]
+ ---> Using cache
+ ---> 0661be054c7d
+Successfully built 0661be054c7d
+Successfully tagged api_tests_exercise_test_authorization:latest
+Building test_content
+Sending build context to Docker daemon  80.38kB
+
+Step 1/8 : FROM python:3.9-slim
+ ---> abf3b76f84b9
+Step 2/8 : WORKDIR /app
+ ---> Using cache
+ ---> e08be3d5d6d5
+Step 3/8 : ARG TEST_FILE
+ ---> Using cache
+ ---> 6135ecb87eff
+Step 4/8 : COPY ${TEST_FILE} /app/test.py
+ ---> Using cache
+ ---> 087c290b327f
+Step 5/8 : ENV PIP_NO_PROGRESS_BAR=off
+ ---> Using cache
+ ---> de981fd96cf5
+Step 6/8 : ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+ ---> Using cache
+ ---> fef692776adf
+Step 7/8 : RUN pip install --no-cache-dir --progress-bar off requests
+ ---> Using cache
+ ---> 68fadb770cc0
+Step 8/8 : CMD ["python", "test.py"]
+ ---> Using cache
+ ---> e1b67fbcc9a5
+Successfully built e1b67fbcc9a5
+Successfully tagged api_tests_exercise_test_content:latest
+Starting api ... 
+Starting api ... done
+Starting api_tests_exercise_test_content_1 ... 
+Starting api_tests_exercise_test_auth_1    ... 
+Starting api_tests_exercise_test_authorization_1 ... 
+Starting api_tests_exercise_test_authorization_1 ... done
+Starting api_tests_exercise_test_auth_1          ... done
+Starting api_tests_exercise_test_content_1       ... done
+Attaching to api, api_tests_exercise_test_authorization_1, api_tests_exercise_test_auth_1, api_tests_exercise_test_content_1
+[36mapi                   |[0m INFO:     Started server process [6]
+[36mapi                   |[0m INFO:     Waiting for application startup.
+[36mapi                   |[0m INFO:     Application startup complete.
+[36mapi                   |[0m INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+[36mapi                   |[0m INFO:     172.20.0.4:58862 - "GET /v1/sentiment?username=bob&password=builder&sentence=life+is+good HTTP/1.1" 200 OK
+[36mapi                   |[0m INFO:     172.20.0.4:58878 - "GET /v2/sentiment?username=bob&password=builder&sentence=life+is+good HTTP/1.1" 403 Forbidden
+[36mapi                   |[0m INFO:     172.20.0.4:58892 - "GET /v1/sentiment?username=alice&password=wonderland&sentence=life+is+good HTTP/1.1" 200 OK
+[36mapi                   |[0m INFO:     172.20.0.4:58902 - "GET /v2/sentiment?username=alice&password=wonderland&sentence=life+is+good HTTP/1.1" 200 OK
+[32mtest_authorization_1  |[0m 
+[32mtest_authorization_1  |[0m === Authorization Test ===
+[32mtest_authorization_1  |[0m bob (v1): 200 -> SUCCESS
+[32mtest_authorization_1  |[0m bob (v2): 403 -> SUCCESS
+[32mtest_authorization_1  |[0m alice (v1): 200 -> SUCCESS
+[32mtest_authorization_1  |[0m alice (v2): 200 -> SUCCESS
+[36mapi                   |[0m INFO:     172.20.0.5:35378 - "GET /permissions?username=alice&password=wonderland HTTP/1.1" 200 OK
+[36mapi                   |[0m INFO:     172.20.0.5:35392 - "GET /permissions?username=bob&password=builder HTTP/1.1" 200 OK
+[36mapi                   |[0m INFO:     172.20.0.5:35400 - "GET /permissions?username=clementine&password=mandarine HTTP/1.1" 403 Forbidden
+[33mtest_auth_1           |[0m 
+[33mtest_auth_1           |[0m request done at "/permissions"
+[33mtest_auth_1           |[0m | username="alice"
+[33mtest_auth_1           |[0m | password="wonderland"
+[33mtest_auth_1           |[0m expected result = 200
+[33mtest_auth_1           |[0m actual result = 200
+[33mtest_auth_1           |[0m ==> SUCCESS
+[33mtest_auth_1           |[0m 
+[33mtest_auth_1           |[0m 
+[33mtest_auth_1           |[0m request done at "/permissions"
+[33mtest_auth_1           |[0m | username="bob"
+[33mtest_auth_1           |[0m | password="builder"
+[33mtest_auth_1           |[0m expected result = 200
+[33mtest_auth_1           |[0m actual result = 200
+[33mtest_auth_1           |[0m ==> SUCCESS
+[33mtest_auth_1           |[0m 
+[33mtest_auth_1           |[0m 
+[33mtest_auth_1           |[0m request done at "/permissions"
+[33mtest_auth_1           |[0m | username="clementine"
+[33mtest_auth_1           |[0m | password="mandarine"
+[33mtest_auth_1           |[0m expected result = 403
+[33mtest_auth_1           |[0m actual result = 403
+[33mtest_auth_1           |[0m ==> SUCCESS
+[33mtest_auth_1           |[0m 
+[36mapi                   |[0m INFO:     172.20.0.3:37130 - "GET /v1/sentiment?username=alice&password=wonderland&sentence=life+is+beautiful HTTP/1.1" 200 OK
+[36mapi                   |[0m INFO:     172.20.0.3:37140 - "GET /v1/sentiment?username=alice&password=wonderland&sentence=that+sucks HTTP/1.1" 200 OK
+[36mapi                   |[0m INFO:     172.20.0.3:37156 - "GET /v2/sentiment?username=alice&password=wonderland&sentence=life+is+beautiful HTTP/1.1" 200 OK
+[36mapi                   |[0m INFO:     172.20.0.3:37158 - "GET /v2/sentiment?username=alice&password=wonderland&sentence=that+sucks HTTP/1.1" 200 OK
+[35mtest_content_1        |[0m 
+[35mtest_content_1        |[0m === Content Test ===
+[35mtest_content_1        |[0m v1 | life is beautiful -> 0.5994 (SUCCESS)
+[35mtest_content_1        |[0m v1 | that sucks -> -0.3612 (SUCCESS)
+[35mtest_content_1        |[0m v2 | life is beautiful -> 0.5994 (SUCCESS)
+[35mtest_content_1        |[0m v2 | that sucks -> -0.3612 (SUCCESS)
+[32mapi_tests_exercise_test_authorization_1 exited with code 0
+[0m[33mapi_tests_exercise_test_auth_1 exited with code 0
+[0m[35mapi_tests_exercise_test_content_1 exited with code 0
+[0mStopping api                                     ... 
+Killing api                                      ... 
+Killing api                                      ... done
+2
+Gracefully stopping... (press Ctrl+C again to force)
